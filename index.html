@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6f7f2">
+<title>Educazione Nutrizionale · Davide Milani</title>
+<style>
+:root{--bg:#f6f7f2;--card:#fff;--ink:#17342d;--muted:#6d7b76;--accent:#2f745e;--soft:#e4eee8;--line:#dce4df;--warn:#f3eee1}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
+button{font:inherit}.app{max-width:760px;margin:auto;min-height:100vh;padding:18px 18px 90px}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}.brand{font-weight:800;letter-spacing:-.03em}.pill{font-size:12px;background:var(--soft);padding:7px 10px;border-radius:999px}
+h1{font-size:34px;line-height:1.02;letter-spacing:-.045em;margin:10px 0}h2{font-size:25px;letter-spacing:-.03em;margin:8px 0 10px}p{line-height:1.55}.muted{color:var(--muted)}.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;margin:14px 0;box-shadow:0 8px 30px rgba(23,52,45,.04)}
+.btn{border:0;border-radius:15px;padding:14px 18px;background:var(--accent);color:white;font-weight:750;width:100%;cursor:pointer}.btn.secondary{background:var(--soft);color:var(--ink)}.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.module{padding:16px;border:1px solid var(--line);border-radius:18px;background:#fff}.module.locked{opacity:.48}.module b{display:block;margin:6px 0}.small{font-size:13px}.progress{height:8px;background:#e7ece9;border-radius:10px;overflow:hidden;margin:12px 0}.bar{height:100%;background:var(--accent);width:0}.step{display:none}.step.active{display:block}.choice{display:block;width:100%;text-align:left;padding:14px;border:1px solid var(--line);background:white;border-radius:14px;margin:9px 0;cursor:pointer;color:var(--ink)}.choice.selected{border:2px solid var(--accent);background:var(--soft)}.feedback{padding:14px;border-radius:14px;background:var(--soft);margin:12px 0}.foodgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.food{padding:12px;border-radius:14px;border:1px solid var(--line);background:white;cursor:pointer}.food.on{background:var(--soft);border:2px solid var(--accent)}.tag{font-size:11px;color:var(--muted);display:block;margin-top:3px}.scenario{background:var(--warn);border-radius:18px;padding:17px;margin:12px 0}.rangeval{font-size:28px;font-weight:800}.hidden{display:none!important}.mission{border-left:5px solid var(--accent)}.check{font-size:30px}.footer-note{text-align:center;color:var(--muted);font-size:12px;margin-top:30px}
+@media(max-width:520px){h1{font-size:30px}.grid{grid-template-columns:1fr}.app{padding:16px 14px 80px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top"><div class="brand">DAVIDE MILANI <span style="font-weight:500">· EDUCAZIONE NUTRIZIONALE</span></div><div class="pill" id="statusPill">v0.5</div></div>
+
+  <section id="home">
+    <p class="muted">Educazione nutrizionale pratica</p>
+    <h1>Impara a scegliere.<br>Non solo a seguire.</h1>
+    <p class="muted">Piccole esperienze per diventare progressivamente più autonomo nelle decisioni alimentari.</p>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;gap:12px"><b>Il tuo percorso</b><span class="small" id="overallText">0%</span></div>
+      <div class="progress"><div class="bar" id="overallBar"></div></div>
+      <button class="btn" onclick="startExperience()" id="mainCta">Inizia la prima esperienza</button>
+    </div>
+
+    <h2 style="font-size:20px;margin-top:28px">Competenze</h2>
+    <div class="grid">
+      <div class="module"><span>🍽️</span><b>Comporre</b><span class="small muted">Costruire e completare i pasti</span></div>
+      <div class="module locked"><span>🔄</span><b>Sostituire</b><span class="small muted">Adattarsi senza rigidità</span></div>
+      <div class="module locked"><span>🛒</span><b>Scegliere</b><span class="small muted">Prodotti, etichette e marketing</span></div>
+      <div class="module locked"><span>👁️</span><b>Osservarsi</b><span class="small muted">Porzioni e segnali</span></div>
+      <div class="module locked"><span>🍕</span><b>Vita reale</b><span class="small muted">Fuori casa e imprevisti</span></div>
+      <div class="module locked"><span>🧭</span><b>Autonomia</b><span class="small muted">Decidere con sicurezza</span></div>
+    </div>
+    <p class="footer-note">I contenuti educativi non sostituiscono le indicazioni personalizzate ricevute dal professionista.</p>
+  </section>
+
+  <section id="experience" class="hidden">
+    <button class="btn ghost" style="width:auto;padding:9px 13px;margin-bottom:15px" onclick="goHome()">← Percorso</button>
+    <div class="small muted">MODULO 1 · COMPORRE</div>
+    <h1 style="font-size:30px">Costruisci il pasto</h1>
+    <div class="progress"><div class="bar" id="expBar"></div></div>
+
+    <div class="step active" data-step="0">
+      <div class="card">
+        <div style="font-size:42px">🍽️</div>
+        <h2>Costruire, non copiare.</h2>
+        <p>Il piano alimentare ti dà delle possibilità. Qui impariamo invece a <b>ragionare sulla struttura di un pasto</b>, così da avere un riferimento anche quando devi scegliere da solo.</p>
+        <div class="grid" style="margin:16px 0">
+          <div class="module"><b>🍚 Carboidrati</b></div>
+          <div class="module"><b>🥚 Proteine</b></div>
+          <div class="module"><b>🥦 Vegetali</b></div>
+          <div class="module"><b>🫒 Grassi</b></div>
+        </div>
+        <p class="muted small">Per ora useremo questa struttura come riferimento. Più avanti vedremo perché non deve diventare una regola rigida.</p>
+        <button class="btn" onclick="next()">Cominciamo</button>
+      </div>
+    </div>
+
+    <div class="step" data-step="1">
+      <h2>Cosa manca?</h2>
+      <div class="scenario"><b>Pranzo:</b><br>🍝 Pasta al pomodoro + 🥒 zucchine + 🫒 olio EVO</div>
+      <p>Rispetto alla struttura appena vista, quale componente manca principalmente?</p>
+      <button class="choice" onclick="answerQ1(this,'prot')">Una fonte proteica</button>
+      <button class="choice" onclick="answerQ1(this,'carb')">Un'altra fonte di carboidrati</button>
+      <button class="choice" onclick="answerQ1(this,'fat')">Un'altra fonte di grassi</button>
+      <button class="choice" onclick="answerQ1(this,'none')">Nessuna: la struttura è già completa</button>
+      <div id="q1fb" class="feedback hidden"></div>
+      <button id="q1next" class="btn hidden" onclick="next()">Continua</button>
+    </div>
+
+    <div class="step" data-step="2">
+      <h2>Costruiscilo tu</h2>
+      <p>Costruisci una possibile struttura completa scegliendo liberamente gli alimenti che useresti.</p>
+      <p class="small muted">Attenzione: alcuni alimenti non entrano perfettamente in una sola categoria. I legumi, per esempio, apportano carboidrati, proteine e fibra. Nel tuo piano possono essere usati, per praticità, al posto della componente vegetale oppure insieme alle verdure, ma <b>non sostituiscono automaticamente la fonte proteica principale</b>.</p>
+      <div class="card" style="padding:14px">
+        <div class="small muted">STRUTTURA</div>
+        <div id="structureState" style="line-height:1.9;margin-top:5px">Carboidrati ○ · Proteine ○ · Vegetali ○ · Grassi ○</div>
+      </div>
+      <div class="foodgrid" id="foods">
+        <button class="food" data-cat="carb" onclick="toggleFood(this)">🍚 Riso<span class="tag">prevalentemente carboidrati</span></button>
+        <button class="food" data-cat="carb" onclick="toggleFood(this)">🍞 Pane<span class="tag">prevalentemente carboidrati</span></button>
+        <button class="food" data-cat="prot" onclick="toggleFood(this)">🥚 Uova<span class="tag">prevalentemente proteine</span></button>
+        <button class="food" data-cat="prot" onclick="toggleFood(this)">🐟 Tonno<span class="tag">prevalentemente proteine</span></button>
+        <button class="food" data-cat="mixed" onclick="toggleFood(this)">🫘 Legumi<span class="tag">alimento misto · carboidrati + proteine + fibra</span></button>
+        <button class="food" data-cat="veg" onclick="toggleFood(this)">🥦 Broccoli<span class="tag">vegetali</span></button>
+        <button class="food" data-cat="veg" onclick="toggleFood(this)">🍅 Pomodori<span class="tag">vegetali</span></button>
+        <button class="food" data-cat="veg" onclick="toggleFood(this)">🥕 Carote<span class="tag">vegetali</span></button>
+        <button class="food" data-cat="fat" onclick="toggleFood(this)">🫒 Olio EVO<span class="tag">prevalentemente grassi</span></button>
+        <button class="food" data-cat="fat" onclick="toggleFood(this)">🥜 Frutta secca<span class="tag">grassi + altri nutrienti</span></button>
+      </div>
+      <button class="btn" style="margin-top:14px" onclick="checkPlate()">Valuta la struttura</button>
+      <div id="platefb" class="feedback hidden"></div>
+      <button id="platenext" class="btn secondary hidden" onclick="next()">Continua</button>
+    </div>
+
+    <div class="step" data-step="3">
+      <h2>Salva il pasto</h2>
+      <div class="scenario"><b>Avevi pensato:</b><br>🍚 riso + 🍗 pollo + 🥒 zucchine + 🫒 olio<br><br><b>Apri il frigo:</b> il pollo è finito.</div>
+      <p>Hai uova, ceci, mozzarella e pane. <b>Quali strategie potrebbero funzionare?</b> Puoi sceglierne più di una.</p>
+      <button class="choice multi" data-save="eggs" onclick="toggleSave(this)">🥚 Uso le uova come nuova fonte proteica</button>
+      <button class="choice multi" data-save="chickpeas_only" onclick="toggleSave(this)">🫘 Metto i ceci al posto del pollo senza modificare altro</button>
+      <button class="choice multi" data-save="mozzarella" onclick="toggleSave(this)">🧀 Uso la mozzarella come fonte proteica, considerando anche il suo apporto di grassi</button>
+      <button class="choice multi" data-save="chickpeas_plus" onclick="toggleSave(this)">🫘🥚 Tengo i ceci nel pasto ma aggiungo anche una fonte proteica prevista dal mio piano</button>
+      <button class="choice multi" data-save="bread" onclick="toggleSave(this)">🍞 Aggiungo pane al riso per compensare l'assenza del pollo</button>
+      <button class="btn" style="margin-top:12px" onclick="checkSave()">Valuta il ragionamento</button>
+      <div id="savefb" class="feedback hidden"></div>
+      <button id="savenext" class="btn secondary hidden" onclick="next()">Continua</button>
+    </div>
+
+    <div class="step" data-step="4">
+      <h2>La struttura vale sempre?</h2>
+      <p>Guarda queste situazioni:</p>
+      <div class="scenario">
+        <b>1.</b> Pranzo: pasta + tonno + pomodori + olio<br><br>
+        <b>2.</b> Spuntino: yogurt + frutta<br><br>
+        <b>3.</b> Poco prima di allenarti: pane + marmellata + banana<br><br>
+        <b>4.</b> Cena: riso + uova + verdure + olio
+      </div>
+      <p>Quali considereresti <b>necessariamente da correggere</b> solo perché non contengono tutti e quattro gli elementi?</p>
+      <button class="choice" onclick="answerRule(this,'13')">Le situazioni 1 e 3</button>
+      <button class="choice" onclick="answerRule(this,'23')">Le situazioni 2 e 3</button>
+      <button class="choice" onclick="answerRule(this,'2')">Solo la situazione 2</button>
+      <button class="choice" onclick="answerRule(this,'none')">Nessuna necessariamente</button>
+      <div id="rulefb" class="feedback hidden"></div>
+      <button id="rulenext" class="btn hidden" onclick="next()">Continua</button>
+    </div>
+
+    <div class="step" data-step="5">
+      <h2>Adesso decidi tu</h2>
+      <div class="scenario">È domenica. A pranzo hai mangiato abbondantemente con amici e alle 20 hai ancora poco appetito. Nel piano avresti normalmente una cena completa.</div>
+      <p><b>Come ragioneresti questa sera?</b></p>
+      <textarea id="openReason" rows="5" placeholder="Scrivi brevemente cosa faresti e perché…" style="width:100%;resize:vertical;border:1px solid var(--line);border-radius:14px;padding:14px;font:inherit;color:var(--ink);background:#fff"></textarea>
+      <button class="btn" style="margin-top:12px" onclick="submitOpen()">Continua</button>
+      <div id="openfb" class="feedback hidden"></div>
+      <button id="opennext" class="btn secondary hidden" onclick="next()">Vai avanti</button>
+    </div>
+
+    <div class="step" data-step="6">
+      <h2>Quanto ti senti autonomo?</h2>
+      <p>Se domani dovessi preparare un pranzo <b>senza guardare il piano alimentare</b>, quanto ti sentiresti sicuro nel costruirlo?</p>
+      <div class="card">
+        <div class="rangeval"><span id="confidenceVal">5</span>/10</div>
+        <input id="confidence" type="range" min="0" max="10" value="5" style="width:100%" oninput="document.getElementById('confidenceVal').textContent=this.value">
+        <div style="display:flex;justify-content:space-between;gap:15px;margin-top:8px" class="small muted"><span>Non saprei da dove partire</span><span style="text-align:right">Saprei ragionare autonomamente</span></div>
+      </div>
+      <button class="btn" onclick="finish()">Completa esperienza</button>
+    </div>
+
+    <div class="step" data-step="7">
+      <div class="card mission">
+        <div class="check">✓</div>
+        <h2>Modulo completato</h2>
+        <p>Oggi ti sei allenato a riconoscere la struttura di un pasto, costruirla, adattarla e soprattutto a non trasformarla in una regola rigida.</p>
+      </div>
+      <div class="card">
+        <div class="small muted">LA TUA PERCEZIONE</div>
+        <h2 style="margin-bottom:2px"><span id="finalConfidence">5</span>/10</h2>
+        <p class="muted">Quanto ti senti sicuro nel costruire autonomamente un pranzo.</p>
+      </div>
+      <div class="card mission">
+        <div class="small muted">MISSIONE · PROSSIMI 7 GIORNI</div>
+        <h2>Un pasto senza copiare.</h2>
+        <p>In uno dei prossimi 7 giorni, quando arriva il momento di preparare <b>un pranzo o una cena</b>, non aprire subito il piano.</p>
+        <p>Prima prova a decidere autonomamente cosa mangiare usando ciò che hai a disposizione. <b>Solo dopo</b> consulta il piano e confronta il tuo ragionamento.</p>
+        <p>Non devi aver scelto gli stessi alimenti. Chiediti: <b>«La mia scelta seguiva comunque una logica sensata?»</b></p>
+        <p class="small muted">Al prossimo controllo potrai raccontare al nutrizionista cosa hai scelto e come hai ragionato.</p>
+      </div>
+      <p class="small muted" style="text-align:center">Nella versione pilota le informazioni restano su questo dispositivo e non vengono inviate al professionista.</p>
+      <button class="btn" onclick="goHome()">Torna al percorso</button>
+      <button class="btn ghost" style="margin-top:9px" onclick="resetApp()">Azzera prova</button>
+    </div>
+  </section>
+</div>
+
+<script>
+let step=0;
+const totalSteps=8;
+
+function load(){
+ const done=localStorage.getItem("edu_m1_complete")==="1";
+ document.getElementById("overallBar").style.width=done?"17%":"0%";
+ document.getElementById("overallText").textContent=done?"1 di 6 aree avviata":"0%";
+ document.getElementById("mainCta").textContent=done?"Rivedi: Costruisci il pasto":"Inizia la prima esperienza";
+ document.getElementById("statusPill").textContent=done?"1 esperienza ✓":"v0.5";
+}
+function startExperience(){
+ document.getElementById("home").classList.add("hidden");
+ document.getElementById("experience").classList.remove("hidden");
+ showStep(0);
+}
+function goHome(){
+ document.getElementById("experience").classList.add("hidden");
+ document.getElementById("home").classList.remove("hidden");
+ load(); window.scrollTo(0,0);
+}
+function showStep(n){
+ step=n;
+ document.querySelectorAll(".step").forEach(x=>x.classList.remove("active"));
+ document.querySelector(`[data-step="${n}"]`).classList.add("active");
+ document.getElementById("expBar").style.width=(n/(totalSteps-1)*100)+"%";
+ window.scrollTo(0,0);
+}
+function next(){showStep(Math.min(step+1,7))}
+function markChoice(btn){
+ btn.parentElement.querySelectorAll(".choice:not(.multi)").forEach(x=>x.classList.remove("selected"));
+ btn.classList.add("selected");
+}
+
+function answerQ1(btn,ans){
+ markChoice(btn);
+ const f=document.getElementById("q1fb");
+ f.classList.remove("hidden");
+ if(ans==="prot"){
+   f.innerHTML="<b>Hai riconosciuto il principio.</b> Pasta, zucchine e olio rappresentano già fonte glucidica, vegetali e grassi. Nella struttura che stiamo usando manca la componente proteica.";
+   document.getElementById("q1next").classList.remove("hidden");
+ } else {
+   const hints={
+     carb:"La pasta rappresenta già la principale fonte glucidica del pasto.",
+     fat:"L'olio rappresenta già una fonte di grassi.",
+     none:"Osserva di nuovo le quattro componenti: una non è ancora rappresentata."
+   };
+   f.innerHTML="<b>Ragioniamoci.</b> "+hints[ans]+" Quale delle quattro componenti manca?";
+ }
+}
+
+function toggleFood(b){b.classList.toggle("on"); updateStructure()}
+function updateStructure(){
+ const cats=new Set([...document.querySelectorAll("#foods .food.on")].map(x=>x.dataset.cat));
+ const state=[
+   ["carb","Carboidrati"],["prot","Proteine"],["veg","Vegetali"],["fat","Grassi"]
+ ].map(([c,l])=>`${l} ${cats.has(c)?"✓":"○"}`).join(" · ");
+ document.getElementById("structureState").textContent=state;
+}
+function checkPlate(){
+ const cats=new Set([...document.querySelectorAll("#foods .food.on")].map(x=>x.dataset.cat));
+ const missing=[];
+ [["carb","una fonte di carboidrati"],["prot","una fonte proteica"],["veg","i vegetali"],["fat","una fonte di grassi"]].forEach(([c,l])=>{if(!cats.has(c))missing.push(l)});
+ const f=document.getElementById("platefb"); f.classList.remove("hidden");
+ const hasMixed=cats.has("mixed");
+ // Nel metodo del piano, i legumi possono occupare per praticità la componente vegetale,
+ // ma non sostituiscono automaticamente la fonte proteica principale.
+ if(hasMixed){
+   missing = missing.filter(x => x !== "una porzione di verdura");
+ }
+ if(missing.length===0){
+   f.innerHTML="<b>Struttura completata.</b> Questa è una possibile combinazione: non esisteva un unico pasto corretto."+
+     (hasMixed?"<br><br>Hai inserito anche i legumi: sono un <b>alimento misto</b>, perché apportano carboidrati, proteine e fibra. Nel tuo piano possono occupare per praticità la componente vegetale del pasto, pur non essendo equivalenti alle verdure. Quando possibile, puoi anche abbinarli a una quota di verdure. Non li consideriamo invece una sostituzione automatica della fonte proteica principale.":"")+
+     "<br><br>Tra poco vedremo anche perché questa struttura non va applicata rigidamente in ogni situazione.";
+   document.getElementById("platenext").classList.remove("hidden");
+ } else {
+   let extra="";
+   if(hasMixed && missing.includes("una fonte proteica")){
+     extra="<br><br><b>Hai scelto i legumi.</b> Sono un alimento misto e nel tuo piano possono occupare per praticità la componente vegetale. Non sostituiscono però automaticamente la fonte proteica principale: prova ad aggiungerne una.";
+   }
+   f.innerHTML="<b>Ci sei quasi.</b> In questa esercitazione stiamo costruendo la struttura completa. Manca ancora "+missing.join(" e ")+"."+extra;
+   document.getElementById("platenext").classList.add("hidden");
+ }
+}
+
+function toggleSave(b){b.classList.toggle("selected")}
+function checkSave(){
+ const selected=new Set([...document.querySelectorAll("[data-save].selected")].map(x=>x.dataset.save));
+ const f=document.getElementById("savefb"); f.classList.remove("hidden");
+ const good=["eggs","mozzarella","chickpeas_plus"];
+ const nGood=good.filter(x=>selected.has(x)).length;
+ const chickpeasOnly=selected.has("chickpeas_only");
+ const bread=selected.has("bread");
+ if(nGood>=1 && !chickpeasOnly && !bread){
+   f.innerHTML="<b>È una possibilità.</b> Hai mantenuto una fonte proteica nel pasto. I legumi possono comunque essere presenti, ma non li stiamo trattando come una sostituzione automatica del pollo: sono alimenti misti, con proteine, carboidrati e fibra. Anche la mozzarella può funzionare, tenendo conto che cambia pure l'apporto di grassi.";
+   document.getElementById("savenext").classList.remove("hidden");
+ } else if(nGood>=1 && (chickpeasOnly || bread)){
+   f.innerHTML="<b>Quasi.</b> Alcune delle tue scelte funzionano. In questo esercizio, però, né aggiungere semplicemente pane né sostituire automaticamente il pollo con i soli ceci mantiene la stessa logica del pasto. Togli queste opzioni e riprova.";
+   document.getElementById("savenext").classList.add("hidden");
+ } else if(chickpeasOnly){
+   f.innerHTML="<b>Ragioniamoci.</b> I ceci apportano anche proteine, ma non sono equivalenti al pollo: apportano una quota importante di carboidrati e fibra. Nel tuo piano possono essere inseriti nel pasto senza diventare automaticamente la fonte proteica principale.";
+   document.getElementById("savenext").classList.add("hidden");
+ } else if(bread){
+   f.innerHTML="<b>Ragioniamoci.</b> Aggiungere pane al riso aumenta soprattutto la componente glucidica e non sostituisce la funzione che aveva il pollo.";
+   document.getElementById("savenext").classList.add("hidden");
+ } else {
+   f.innerHTML="<b>Scegli almeno una strategia.</b> Chiediti prima quale funzione aveva il pollo nel pasto.";
+ }
+}
+
+function answerRule(btn,ans){
+ markChoice(btn);
+ const f=document.getElementById("rulefb"); f.classList.remove("hidden");
+ if(ans==="none"){
+   f.innerHTML="<b>Esatto: nessuna necessariamente.</b> La struttura è uno strumento utile soprattutto per orientare i pasti principali, non una legge da applicare a ogni occasione. Spuntini, allenamento, appetito e contesto possono richiedere strutture diverse.";
+   document.getElementById("rulenext").classList.remove("hidden");
+ } else {
+   f.innerHTML="<b>Ragioniamoci.</b> Il fatto che una situazione non contenga tutti e quattro gli elementi non basta, da solo, per definirla da correggere. Conta anche il contesto.";
+ }
+}
+
+function escapeHtml(s){
+ return s.replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\\\"":"&quot;","'":"&#039;"}[c]));
+}
+function submitOpen(){
+ const t=document.getElementById("openReason").value.trim();
+ if(t.length<8){
+   const f=document.getElementById("openfb"); f.classList.remove("hidden");
+   f.innerHTML="Scrivi almeno una breve frase sul tuo ragionamento: qui non c'è una risposta da indovinare.";
+   return;
+ }
+ localStorage.setItem("edu_m1_open",t);
+ const f=document.getElementById("openfb"); f.classList.remove("hidden");
+ f.innerHTML=
+   '<div style="margin-bottom:12px"><span class="small muted">IL TUO RAGIONAMENTO</span><br><b>“'+escapeHtml(t)+'”</b></div>'+
+   '<b>Come puoi ragionare in una situazione così?</b><br>'+
+   'Se dopo un pranzo più abbondante hai ancora poco appetito, non sei obbligato a replicare automaticamente la cena prevista. Puoi, per esempio, <b>ridurne quantità e complessità</b>, scegliere qualcosa di più leggero oppure <b>posticiparla</b> se ne senti la necessità.<br><br>'+
+   'Allo stesso tempo, aver mangiato di più a pranzo non significa dover <b>saltare la cena per compensare</b>. Il punto è considerare insieme fame, contesto e giornata complessiva, senza applicare il piano in modo rigido e senza entrare nella logica della compensazione.';
+ document.getElementById("opennext").classList.remove("hidden");
+}
+
+function finish(){
+ const c=document.getElementById("confidence").value;
+ localStorage.setItem("edu_m1_complete","1");
+ localStorage.setItem("edu_m1_confidence",c);
+ document.getElementById("finalConfidence").textContent=c;
+ showStep(7);
+}
+function resetApp(){
+ localStorage.removeItem("edu_m1_complete");
+ localStorage.removeItem("edu_m1_confidence");
+ localStorage.removeItem("edu_m1_open");
+ document.querySelectorAll(".selected").forEach(x=>x.classList.remove("selected"));
+ document.querySelectorAll("#foods .food").forEach(x=>x.classList.remove("on"));
+ document.querySelectorAll(".feedback").forEach(x=>x.classList.add("hidden"));
+ document.querySelectorAll("#q1next,#platenext,#savenext,#rulenext,#opennext").forEach(x=>x.classList.add("hidden"));
+ document.getElementById("openReason").value="";
+ document.getElementById("confidence").value=5;
+ document.getElementById("confidenceVal").textContent=5;
+ updateStructure(); goHome();
+}
+load();
+</script>
+</body>
+</html>
